@@ -51,14 +51,16 @@ public class SecurityConfig {
 				.anyRequest().authenticated()
 		);
 		
+		// /login은 로그인 폼을 띄우라는 것
 		http.formLogin().loginPage("/login")
-			.defaultSuccessUrl("/main", true);
-		http.formLogin().loginProcessingUrl("/loginProcess")
+			.defaultSuccessUrl("/main", true); //로그인에 성공하면 main으로 가라는 것
+ 		http.formLogin().loginProcessingUrl("/loginProcess") // 성공했을 때 로그인 프로세스
 			.defaultSuccessUrl("/main", true)
 			.failureUrl("/login?error=true")
 			.successHandler(new AuthenticationSuccessHandler() {
 				
-				@Override
+				// 성공했을 때
+				@Override 
 				public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 						Authentication authentication) throws IOException, ServletException {
 					UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
@@ -70,7 +72,7 @@ public class SecurityConfig {
 				}
 			} );
 		
-		//최대 세션갯수 1개, 새로운 로그인 차단
+		//최대 세션갯수 1개, 새로운 로그인 차단(새로운 브라우저에서 로그인 차단)
 		http.sessionManagement()
 			.maximumSessions(1)
 			.maxSessionsPreventsLogin(true)
@@ -93,7 +95,7 @@ public class SecurityConfig {
 			.deleteCookies("JSESSIONID")
 			.invalidateHttpSession(true)
 			.permitAll();
-		
+		//error
 		http.exceptionHandling().accessDeniedPage("/error.jsp");
 		http.userDetailsService(userDetailsService());
 		return http.build();
