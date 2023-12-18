@@ -12,8 +12,10 @@ public class Condition extends HashMap<String, Object>{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public Condition() {
+	
+	public Condition() {	
 	}
+	
 	public void putClass(Object o) {
 		Map<String,Object> map = AssetUtil.toMap(o);
 		putAll(map);

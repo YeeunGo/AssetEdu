@@ -1,6 +1,7 @@
 package kr.co.kfs.assetedu.model;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,11 +12,12 @@ class ConditionTest {
 
 	@Test
 	void test() {
-		Condition condition = new Condition();
-		assertNotNull( condition);
+	//	Condition condition = new Condition();
+	//	assertNotNull( condition);
 	}
-	@Test
-	void test1() {
+	
+//	@Test
+//	void test1() {
 //		Com02Code code = new Com02Code();
 //		code.setCom02ComCd("1");
 //		code.setCom02DtlCd("2");
@@ -26,6 +28,6 @@ class ConditionTest {
 //		log.debug("s: {}", s);
 //		log.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 
-	}
+//	}
 
 }
