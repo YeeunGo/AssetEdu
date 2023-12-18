@@ -16,17 +16,20 @@ import java.util.Map;
  */
 public class AssetUtil {
 	public static Map<String, Object> toMap(Object o ) {
-
+		
+		// o의 객체를 가져와서 해당 객체의 모든 매서드를 가져온다.
 		Method[] methods = o.getClass().getDeclaredMethods();
 		Map<String,Object> map = new HashMap<>();
 
 		for (int i = 0; i < methods.length; i++) {
-
+			//name이 get으로 시작한다면
 			if (methods[i].getName().startsWith("get")) {
 				try {
-					
+					// 매개변수의 갯수가 0이면 이러한 코드를 실행한다.(getter라는 뜻)
 					if( methods[i].getGenericParameterTypes().length == 0){
+								// 예를 들어서 getUserName이라는 매서드의 이름에서 userName 이라는 필드 명만 추출하기 위한 것.
 						map.put(methods[i].getName().substring(3,4).toLowerCase()+ methods[i].getName().substring(4),
+								// 해당 매서드의 결과값을 받아오는 것 getter의 값은 그 필드의 값이다.
 								methods[i].invoke(o));
 					}
 				} catch (IllegalArgumentException e) {

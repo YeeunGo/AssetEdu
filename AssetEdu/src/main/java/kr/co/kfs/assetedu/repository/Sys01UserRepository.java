@@ -6,16 +6,16 @@ import kr.co.kfs.assetedu.model.Condition;
 import kr.co.kfs.assetedu.model.Sys01User;
 import kr.co.kfs.assetedu.model.Sys02Dict;
 
-public interface Sys02DictRepository {
+public interface Sys01UserRepository {
 	// list and totalcount
-	List<Sys02Dict> selectList(Condition condition);
+	List<Sys01User> selectList(Condition condition);
 	Integer selectCount(Condition condition);
 	
 	String getDictId();
 	
 	// CRUD
-	Sys02Dict selectOne(Sys02Dict user);
-	int insert(Sys02Dict user);
-	int update(Sys02Dict user);
-	int delete(Sys02Dict user);
+	Sys02Dict selectOne(Sys01User user);
+	int insert(Sys01User user);
+	int update(Sys01User user);
+	int delete(Sys01User user);
 }
