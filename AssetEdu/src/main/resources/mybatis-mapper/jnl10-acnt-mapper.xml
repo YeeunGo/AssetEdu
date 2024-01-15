@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kfs.assetedu.repository.Jnl10AcntRepository">
+    <sql id="whereQureyAttr">
+    	<if test="jnl10SlipYn != null" >
+    		AND j.jnl10_slip_yn = #{jnl10SlipYn}
+    	</if>
+        <if test="searchText != null">
+            AND upper(concat( j.jnl10_acnt_cd, j.jnl10_acnt_nm)) like concat('%',upper(#{searchText}),'%')
+        </if>
+    </sql>
+	
+	<select id="selectCount" parameterType="QueryAttr"  resultType="Long">
+	SELECT 	
+		count(*) as count
+	FROM 
+		jnl10_acnt j
+	WHERE 1=1
+		<include refid="whereQureyAttr"/>	
+</select>
+
+<select id="selectList" parameterType="QueryAttr"
+	resultType="Jnl10Acnt">
+	SELECT
+	j.jnl10_acnt_cd AS jnl10AcntCd,
+	j.jnl10_acnt_nm AS jnl10AcntNm,
+	j.jnl10_parent_cd AS jnl10ParentCd,
+	jj.jnl10_acnt_nm AS jnl10ParentNm,
+	j.jnl10_acnt_attr_cd AS jnl10AcntAttrCd,
+	j.jnl10_drcr_type AS jnl10DrcrType,
+	j.jnl10_slip_yn AS jnl10SlipYn,
+	j.jnl10_use_yn AS jnl10UseYn,
+	f_com_nm('AcntAttrCode', j.jnl10_acnt_attr_cd) AS jnl10AcntAttrNm,
+	f_com_nm('DrcrType', j.jnl10_drcr_type) AS jnl10DrcrTypeNm
+	FROM
+	jnl10_acnt j
+	LEFT JOIN
+	jnl10_acnt jj ON j.jnl10_parent_cd = jj.jnl10_acnt_cd
+	WHERE 1=1
+	<include refid="whereQureyAttr" />
+	ORDER BY j.jnl10_acnt_cd
+	<if test="pageAttr != null and pageAttr.offset != null">
+		OFFSET #{pageAttr.offset}
+	</if>
+	<if test="pageAttr != null and pageAttr.limit != null">
+		LIMIT #{pageAttr.limit}
+	</if>
+</select>
+
+<select id="selectOne" parameterType="Jnl10Acnt" resultType="Jnl10Acnt">
+SELECT
+	j.jnl10_acnt_cd AS jnl10AcntCd,
+	j.jnl10_acnt_nm AS jnl10AcntNm,
+	j.jnl10_parent_cd AS jnl10ParentCd,
+	jj.jnl10_acnt_nm AS jnl10ParentNm,
+	j.jnl10_acnt_attr_cd AS jnl10AcntAttrCd,
+	j.jnl10_drcr_type AS jnl10DrcrType,
+	j.jnl10_slip_yn AS jnl10SlipYn,
+	j.jnl10_use_yn AS jnl10UseYn,
+	f_com_nm('AcntAttrCode', j.jnl10_acnt_attr_cd) AS jnl10AcntAttrNm,
+	f_com_nm('DrcrType', j.jnl10_drcr_type) AS jnl10DrcrTypeNm
+	FROM
+	jnl10_acnt j
+	LEFT JOIN
+	jnl10_acnt jj ON j.jnl10_parent_cd = jj.jnl10_acnt_cd
+	WHERE j.jnl10_acnt_cd = #{jnl10AcntCd}
+
+</select>
+
+<insert id="insert" parameterType="Jnl10Acnt">
+	INSERT INTO jnl10_acnt(jnl10_acnt_cd, jnl10_acnt_nm, jnl10_parent_cd, jnl10_acnt_attr_cd, jnl10_drcr_type, jnl10_slip_yn, jnl10_use_yn)
+	VALUES (#{jnl10AcntCd}, #{jnl10AcntNm}, #{jnl10ParentCd}, #{jnl10AcntAttrCd}, #{jnl10DrcrType}, #{jnl10SlipYn}, #{jnl10UseYn})
+</insert>
+
+<update id="update" parameterType="Jnl10Acnt">
+	UPDATE  jnl10_acnt SET
+		jnl10_acnt_nm		= #{jnl10AcntNm},
+		jnl10_parent_cd		= #{jnl10ParentCd},
+		jnl10_acnt_attr_cd	= #{jnl10AcntAttrCd},
+		jnl10_drcr_type		= #{jnl10DrcrType},
+		jnl10_slip_yn		= #{jnl10SlipYn},
+		jnl10_use_yn		= #{jnl10UseYn}
+	WHERE jnl10_acnt_cd		= #{jnl10AcntCd}
+</update>
+
+<delete id="delete" parameterType="Jnl10Acnt">
+DELETE FROM jnl10_acnt WHERE jnl10_acnt_cd	= #{jnl10AcntCd}
+</delete>
+ 	
+</mapper>

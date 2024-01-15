@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kfs.assetedu.repository.Jnl11ReprAcntRepository">
+    <sql id="whereQureyAttr">
+        <if test="searchText != null">
+            AND upper(concat(j.jnl11_repr_acnt_cd, j.jnl11_repr_acnt_nm)) like concat('%',upper(#{searchText}),'%')
+        </if>
+    </sql>
+
+<select id="selectList" parameterType="QueryAttr" resultType="Jnl11ReprAcnt">
+	SELECT
+		j.jnl11_repr_acnt_cd         AS jnl11ReprAcntCd
+		,j.jnl11_repr_acnt_nm        AS jnl11ReprAcntNm
+		,j.jnl11_acnt_attribute_cd   AS jnl11AcntAttributeCd
+		,j.jnl11_tgt_repr_acnt_cd    AS jnl11TgtReprAcntCd
+		,f_com_nm('AcntAttrCode', j.jnl11_acnt_attribute_cd) as jnl11AcntAttributeNm
+		,jj.jnl11_repr_acnt_nm AS jnl11TgtReprAcntNm
+	FROM 
+		  JNL11_REPR_ACNT j LEFT JOIN  JNL11_REPR_ACNT jj
+	ON j.jnl11_tgt_repr_acnt_cd = jj.jnl11_repr_acnt_cd
+	WHERE 1=1
+		<include refid="whereQureyAttr" />
+	ORDER BY j.jnl11_repr_acnt_cd
+		<if test="pageAttr != null and pageAttr.offset != null">
+	      	OFFSET #{pageAttr.offset}
+		</if>   
+		<if test="pageAttr != null and pageAttr.limit != null">
+		 	LIMIT #{pageAttr.limit}
+		</if>
+	
+</select>
+
+<select id="selectCount" parameterType="QueryAttr" resultType="Long">
+	SELECT 	
+		count(*) as count
+	FROM 
+		JNL11_REPR_ACNT j 
+	WHERE 1=1
+		<include refid="whereQureyAttr"/>	
+</select>
+
+<select id="selectOne" parameterType="Jnl11ReprAcnt" resultType="Jnl11ReprAcnt">
+SELECT
+		j.jnl11_repr_acnt_cd         AS jnl11ReprAcntCd
+		,j.jnl11_repr_acnt_nm        AS jnl11ReprAcntNm
+		,j.jnl11_acnt_attribute_cd   AS jnl11AcntAttributeCd
+		,j.jnl11_tgt_repr_acnt_cd    AS jnl11TgtReprAcntCd
+		,f_com_nm('AcntAttrCode', j.jnl11_acnt_attribute_cd) as jnl11AcntAttributeNm
+		,jj.jnl11_repr_acnt_nm AS jnl11TgtReprAcntNm
+	FROM 
+		  JNL11_REPR_ACNT j LEFT JOIN  JNL11_REPR_ACNT jj
+	ON j.jnl11_tgt_repr_acnt_cd = jj.jnl11_repr_acnt_cd
+	WHERE j.jnl11_repr_acnt_cd = #{jnl11ReprAcntCd}
+
+</select>
+
+<insert id="insert" parameterType="Jnl11ReprAcnt">
+INSERT INTO jnl11_repr_acnt (
+				jnl11_repr_acnt_cd
+				,jnl11_repr_acnt_nm
+				,jnl11_acnt_attribute_cd
+				,jnl11_tgt_repr_acnt_cd
+	)
+VALUES (
+				#{jnl11ReprAcntCd},#{jnl11ReprAcntNm},#{jnl11AcntAttributeCd},#{jnl11TgtReprAcntCd}
+
+)
+</insert>
+
+<update id="update" parameterType="Jnl11ReprAcnt">
+	UPDATE jnl11_repr_acnt SET
+				jnl11_repr_acnt_nm			= #{jnl11ReprAcntNm}
+				,jnl11_acnt_attribute_cd	= #{jnl11AcntAttributeCd}
+				,jnl11_tgt_repr_acnt_cd		= #{jnl11TgtReprAcntCd}
+	WHERE jnl11_repr_acnt_cd = #{jnl11ReprAcntCd}
+
+</update>
+
+<delete id="delete" parameterType="Jnl11ReprAcnt">
+
+DELETE FROM jnl11_repr_acnt WHERE jnl11_repr_acnt_cd = #{jnl11ReprAcntCd}
+
+</delete>
+
+
+</mapper>

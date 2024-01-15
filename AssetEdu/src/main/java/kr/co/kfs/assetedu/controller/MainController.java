@@ -1,5 +1,8 @@
 package kr.co.kfs.assetedu.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.kfs.assetedu.AssetEduConfig;
+import kr.co.kfs.assetedu.model.Opr01Cont;
+import kr.co.kfs.assetedu.service.Opr01ContService;
 import kr.co.kfs.assetedu.servlet.security.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,12 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 public class MainController {
 
 	private AssetEduConfig assetEduConfig;
-//	private Opr01ContService contService;
+	private Opr01ContService contService;
 	
-//	public MainController(AssetEduConfig assetEduConfig, Opr01ContService contService ) {
-	public MainController(AssetEduConfig assetEduConfig ) {
+	public MainController(AssetEduConfig assetEduConfig, Opr01ContService contService ) {
 		this.assetEduConfig = assetEduConfig;
-//		this.contService = contService;
+		this.contService = contService;
 	}
 	
 	public String home() {
@@ -37,12 +41,12 @@ public class MainController {
 		log.debug("{} 로그인 됨", userDetails.getUsername());
 		
 		//보유원장 이월처리(보통 업무개시때 발생시킴)
-//		Opr01Cont cont = new Opr01Cont();
-//		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
-//		cont.setOpr01ContDate(transFormat.format(new Date())); 
-//		
-//		String resultMsg = contService.procMain("A", cont);
-//		log.debug("resultMsg:{}", resultMsg);
+		Opr01Cont cont = new Opr01Cont();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
+		cont.setOpr01ContDate(transFormat.format(new Date())); 
+		
+		String resultMsg = contService.procMain("A", cont);
+		log.debug("resultMsg:{}", resultMsg);
 		
 		model.addAttribute("title", assetEduConfig.getTitle());
 		model.addAttribute("gitSourceUrl", assetEduConfig.getGitSourceUrl());

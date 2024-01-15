@@ -14,6 +14,7 @@ import lombok.Setter;
  * @author Kim Do Young
  *
  */
+// ajax값을 Json으로 바구기 위한 class
 @Getter
 @Setter
 public class ApiData {

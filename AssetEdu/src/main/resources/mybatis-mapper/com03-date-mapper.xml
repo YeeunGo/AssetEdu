@@ -4,23 +4,23 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.kfs.assetedu.repository.Com03DateRepository">
-   <sql id="whereCondition">
+   <sql id="whereQueryAttr">
 		<!--    검색조건 -->
    		<if test="year != null and year != ''">
 	       	AND com03_day like #{year}
 		</if>
    </sql>
    
-	<select id="selectCount" parameterType="Condition" resultType="Integer">
+	<select id="selectCount" parameterType="QueryAttr" resultType="Integer">
    		SELECT 
    			count(*) as count
    		FROM
    			com03_date
    		WHERE 1=1
-   			<include refid="whereCondition"/>	
+   			<include refid="whereQueryAttr"/>	
    </select> 
    
-   <select id="selectList" parameterType="Condition" resultType="Com03Date">
+   <select id="selectList" parameterType="QueryAttr" resultType="Com03Date">
 	   SELECT 
 			com03_day        as com03Day,        /** 일*/      
 			com03_weekday    as com03Weekday,    /** 요일*/      
@@ -29,7 +29,7 @@
 	   FROM 
 	   		com03_date
 	   WHERE 1=1
-	   	<include refid="whereCondition"/>
+	   	<include refid="whereQueryAttr"/>
 	   ORDER BY com03_day	
 		<if test="offset != null and offset != null">
 	      	OFFSET #{offset}
@@ -51,7 +51,7 @@
 	       	AND com03_day  = #{com03Day}
    </select>
    
-   <select id="selectListByPeriod" parameterType="Condition" resultType="Com03Date">
+   <select id="selectListByPeriod" parameterType="QueryAttr" resultType="Com03Date">
        SELECT 
             com03_day        as com03Day,        /** 일*/      
             com03_weekday    as com03Weekday,    /** 요일*/      
@@ -64,7 +64,7 @@
        ORDER BY com03_day
    </select>
    
-   <select id="selectBizDate" parameterType="Condition" resultType="String">
+   <select id="selectBizDate" parameterType="QueryAttr" resultType="String">
         SELECT MAX(com03_day)   as com03Day
           FROM (
 		         SELECT com03_day
@@ -76,7 +76,7 @@
 		       ) t
    </select>
    
-   <select id="getDate" parameterType="Condition" resultType="String">
+   <select id="getDate" parameterType="QueryAttr" resultType="String">
         SELECT f_get_date(#{date}, #{period})
    </select>
    

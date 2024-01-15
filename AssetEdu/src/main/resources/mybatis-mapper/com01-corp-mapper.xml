@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kfs.assetedu.repository.Com01CorpRepository">
+<sql id="whereQueryAttr">
+		<if test="com01CorpCd != null and com01CorpCd != ''">
+	       	AND com01_corp_cd = #{com01CorpCd}
+		</if>
+		<if test="searchText != null and searchText != ''">
+	       	AND upper(concat(com01_corp_cd,com01_corp_nm,com01_corp_type_nm)) like upper(concat('%', #{searchText}, '%'))
+		</if>
+		<if test="com01CorpType != null and com01CorpType !=''">
+			AND com01_corp_type = #{com01CorpType}
+		</if>
+</sql>
+<select id="selectList" parameterType="QueryAttr" resultType="Com01Corp">
+	   SELECT 
+			com01_corp_cd AS com01CorpCd,      /** 기관코드 */           
+			com01_corp_nm AS com01CorpNm,      /** 기관명 */            
+			com01_corp_type AS com01CorpType,    /** 기관구분(CorpType) */ 
+			com01_corp_enm AS com01CorpEnm,     /** 기관영문명 */          
+			com01_extn_corp_cd AS com01ExtnCorpCd, /** 대외코드 */
+            com01_corp_type_nm AS com01CorpTypeNm /** 기관구분명 */ 
+	   FROM ( 
+	           SELECT com01_corp.*
+	                , f_com_nm('CorpType', com01_corp_type) as com01_corp_type_nm
+	             FROM com01_corp
+	        ) t
+	   WHERE 1=1
+		<include refid="whereQueryAttr"/>
+	   ORDER BY com01_corp_type, com01_corp_cd, com01_corp_nm
+		<if test="pageAttr != null and pageAttr.offset != null">
+	      	OFFSET #{pageAttr.offset}
+		</if>   
+		 <if test="pageAttr != null and pageAttr.limit != null">
+		 	LIMIT #{pageAttr.limit}
+		 </if>
+   </select>
+
+<select id="selectOne" parameterType="Com01Corp" resultType="Com01Corp">
+		   SELECT 
+            com01_corp_cd,      /** 기관코드 */           
+            com01_corp_nm,      /** 기관명 */            
+            com01_corp_type,    /** 기관구분(CorpType) */ 
+            com01_corp_enm,     /** 기관영문명 */          
+            com01_extn_corp_cd, /** 대외코드 */
+            com01_corp_type_nm  /** 기관구분명 */ 
+       FROM ( 
+               SELECT com01_corp.*
+                    , f_com_nm('CorpType', com01_corp_type) as com01_corp_type_nm
+                 FROM com01_corp
+            ) t
+	   WHERE 1=1
+		<if test="com01CorpCd != null">
+	       	AND com01_corp_cd = #{com01CorpCd}
+		</if>
+</select>
+
+<insert id="insert"  parameterType="Com01Corp">
+INSERT INTO com01_corp(
+			com01_corp_cd, com01_corp_nm, com01_corp_type, com01_corp_enm, com01_extn_corp_cd
+	  )
+	  VALUES (
+	  	   #{com01CorpCd },#{com01CorpNm},#{com01CorpType},#{com01CorpEnm},#{com01ExtnCorpCd }
+	  );
+</insert>
+
+<update id="update" parameterType="Com01Corp">
+  UPDATE  
+      	com01_corp 
+      SET
+		com01_corp_cd      = #{com01CorpCd},  	/** 기관코드 */            
+		com01_corp_nm      = #{com01CorpNm}, 	/** 기관명 */            
+		com01_corp_type    = #{com01CorpType}, 	/** 기관구분(CorpType) */ 
+		com01_corp_enm     = #{com01CorpEnm }, 	/** 기관영문명 */          
+		com01_extn_corp_cd = #{com01ExtnCorpCd} /** 대외코드 */
+      WHERE 1=1
+	     AND com01_corp_cd = #{com01CorpCd}
+</update>
+<delete id="delete" parameterType="string">
+	      DELETE FROM
+      	com01_corp
+      WHERE 1=1
+      	AND com01_corp_cd = #{com01CorpCd}
+</delete>
+
+<select id="selectCount" parameterType="QueryAttr" resultType="Long">
+SELECT count(*)
+FROM com01_corp
+WHERE 1=1
+<include refid="whereQueryAttr"/>
+</select>
+
+<select id="selectType" resultType="Com01Corp">
+select com01_corp_type_nm AS com01CorpTypeNm
+	 , com01_corp_type AS com01CorpType
+	   FROM ( 
+	           SELECT com01_corp.*
+	                , f_com_nm('CorpType', com01_corp_type) as com01_corp_type_nm
+	             FROM com01_corp
+	        ) t group by com01_corp_type_nm, com01_corp_type;
+</select>
+</mapper>

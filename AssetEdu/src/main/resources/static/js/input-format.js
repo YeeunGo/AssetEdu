@@ -34,15 +34,23 @@
 		return this.each(function()
 		{
 			var $this = $(this);
+			
+			// 입력 필드에 IME 모드 비활성화 (주로 한글 입력 방지)
 			$this.css("ime-mode", "disabled");
+			
+			// 키보드를 누를 때 이벤트 처리
 			$(this).keydown(function(e)
 			{
 				console.log(e.keyCode);
+				
+				 // 특정 언어(아시아 언어) 입력을 차단 (키 코드 229 이상)
 				if(e.KeyCode >= 229){ 
 					window.event.returnValue = false;
 					disabledEventPropagation(e);
 					return;
 				}
+				
+				// 특정 키(삭제, 백스페이스, 탭, ESC, 엔터, 소수점, 대시) 허용
 				if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 					 // Ctrl+A, Command+A
 					(e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) || 
@@ -52,11 +60,17 @@
 					(e.keyCode >= 35 && e.keyCode <= 40)) {
 						 return;
 				}
+				
+				// Shift 키 활성화되어 있거나, 숫자가 아닌 키 입력 방지
 				if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
 					e.preventDefault();
 				}
 			}).keyup(function(e){
+				
+				 // 숫자가 아닌 모든 문자 제거
 				$this.val($this.val().replace(/\D/g,''));
+				
+				// 한글 문자도 제거
 				$this.val($this.val().replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g,''));
 			})
 		});
@@ -71,15 +85,22 @@
         }
     }
     $.fn.inputDateFormat = function(){
+		// 필요한 키 코드 상수 정의
 		var INSERT=45, DEL =46, BACK_SPACE = 8, TAB =9, ESC=27, ENTER = 13, NUM_LOCK = 110;
 		var NUM_0 = 48, NUM_9 = 57, NUM_PAD_0 = 96, NUM_PAD_9 = 105;
 		var PAGE_UP = 33, PAGE_DOWN=34, END = 35, HOME=36, ARROW_LEFT = 37, ARROW_UP = 38, ARROW_RIGHT=39, ARROW_DOWN=40;
-		function isNumKey(keyCode){return (keyCode >= NUM_0 && keyCode <= NUM_9) || (keyCode >= NUM_PAD_0 && keyCode <= NUM_PAD_9)}
+		
+		 // 숫자 키 여부를 확인하는 함수
+		function isNumKey(keyCode){return (keyCode >= NUM_0 && keyCode <= NUM_9) || (keyCode >= NUM_PAD_0 && keyCode <= NUM_PAD_9)} 
         
+        // 선택된 각 요소에 대해 함수 실행
         return this.each(function(idx, el){
 			var $this = $(this);
+			
+			 // 키를 누를 때의 이벤트 처리
 			$(this).keydown(function(e)
 			{
+				// 특정 키(삭제, 백스페이스, 탭, ESC, 엔터, 소수점, 대시) 허용
 				//console.log(e.keyCode);
 				if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 					 // Ctrl+A, Command+A
@@ -88,15 +109,19 @@
 					(e.keyCode >= 35 && e.keyCode <= 40)) {
 						 return;
 				}
+				
+				 // Shift 키 활성화되어 있거나, 숫자가 아닌 키 입력 방지
 				if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
 					e.preventDefault();
 				}
 			}).keyup(function(e){
+				// 한글 문자 제거
 				$this.val($this.val().replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g,''));
-				//console.log('ku:code :' + e.keyCode);
+				
+				// 숫자 키 입력 시 날짜 형식 적용
 				if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)){
 					var v = $this.val().replace(/\D/gi,'');
-					//console.log(v);
+					 // 날짜 형식 적용 (YYYY-MM-DD)
 					if(v.length < 4){
 						;
 					}else if(v.length >=4 &&  v.length < 7){
@@ -104,11 +129,14 @@
 					}else {
 						var d = v.substring(0,4)+'-'+v.substring(4,6)+'-' + v.substring(6,8);
 						$this.val(d);
+						// 유효하지 않은 날짜 체크
 						if(d.length==10 && new Date(d) == 'Invalid Date'){
 							alert(d + ' 는 올바른 날짜가 아닙니다');
 						}
 					}
 				}else if(e.keyCode == INSERT){
+					
+					// INSERT 키 입력 시, datepicker 활성화 (datepicker가 있는 경우)
 					if($this.datepicker) { $this.datepicker(); $this.trigger('click'); $this.focus();}
 
 				}else if(e.keyCode == HOME){

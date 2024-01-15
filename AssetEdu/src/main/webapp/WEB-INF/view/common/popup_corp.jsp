@@ -24,7 +24,7 @@
  		<input type="hidden" name="corpCd" value="${param.corpCd }"/>
  		<input type="hidden" name="corpNm" value="${param.corpNm }"/>
  		<input type="hidden" name="pageSize" value="${pageAttr.pageSize }"/>
-<%--  		<input type="hidden" name="currentPageNumber" value="${pageAttr.currentPageNumber }"/> --%>
+ 		<input type="hidden" name="whichPage" value="${whichPage}"/>
  		<input type="hidden" name="currentPageNumber" value="1"/>
 
         <div>
@@ -49,9 +49,9 @@
 		    <tr class="align-middle">
 		      <td><input type="radio" data-com01-corp-cd="${corp.com01CorpCd }" data-com01-corp-nm="${corp.com01CorpNm }" id="com01CorpCd_${status.count }" name="com01CorpCd"/></td>
               <td class="text-center"><label for="com01CorpTypeNm_${status.count }">${corp.com01CorpTypeNm }</label></td>
-              <td class="text-center"><label for="com01CorpCd_${status.count }">${corp.com01CorpCd }</label></td>
-		      <td>                    <label for="com01CorpCd_${status.count }">${corp.com01CorpNm }</label></td>
-		      <td>                    <label for="com01CorpCd_${status.count }">${corp.com01CorpEnm }</label></td>
+              <td class="text-center"><label for="com01CorpCd_${status.count}">${corp.com01CorpCd }</label></td>
+		      <td class="text-center"><label for="com01CorpCd_${status.count}">${corp.com01CorpNm }</label></td>
+		      <td class="text-center"><label for="com01CorpCd_${status.count}">${corp.com01CorpEnm }</label></td>
 		    </tr>
 	    </c:forEach>
 	  </tbody>
@@ -63,7 +63,6 @@
             <div class="col"><kfs:Pagination pageAttr="${pageAttr }" id="pageAttr"></kfs:Pagination> </div>
             <div class="col"><kfs:PageInfo pageAttr="${pageAttr }" id="pageAttr"></kfs:PageInfo> </div>
         </div>
-
         <div class="footer-menu text-center">
             <button type="button" id="btnSelect" class="btn btn-primary" >선택</button>
             <button type="button" id="btnCancel"  class="btn btn-secondary">닫기</button>
@@ -77,40 +76,58 @@
 $(document).ready(function () {
 	console.log('ready...기관선택팝업');
 
-    //테이블 클릭시 하이라이트 표시
+    // 테이블 클릭시 하이라이트 표시
     $('.corpTable').on('click', 'tbody tr', function(event) {
-          $(this).addClass('highlight').siblings().removeClass('highlight');
+        $(this).addClass('highlight').siblings().removeClass('highlight');
+        $(this).find('input[type="radio"]').prop('checked', true);
     });
-	
-	var corpCd = '<%=request.getParameter("corpCd")%>';
-	var corpNm = '<%=request.getParameter("corpNm")%>';
-	$('#btnSelect').on('click', function(){
-		var count = $('input:radio[name=com01CorpCd]:checked').length;
-		if(count == 0){
-			alert('기관을 선택해 주십시오');
-			return;
+    
+	//enter 치면 전체 검색
+	$("#searchText").on("keyup",function(key){
+		if(key.keyCode==13) {
+			$('.btnRetrieve').trigger('click');
+		}else if(key.keyCode==46){
+			$(this).val('');
 		}
-		var $radio = $('input:radio[name=com01CorpCd]:checked');
-		var cd = $radio.data('com01-corp-cd');
-		var nm = $radio.data('com01-corp-nm');
-		console.log(cd + ", " + nm);
-		$(opener.document).find('#'+corpCd).val(cd);
-		$(opener.document).find('#'+corpNm).val(nm);
-		window.close();
 	});
+	
+
+    $('#btnSelect').on('click', function(){
+		var count = $('input:radio[name=com01CorpCd]:checked').length;
+  		if(count == 0){
+  			alert('기관을 선택해 주십시오');
+  			return;
+   		}
+  		var corpCd = "${corpCd}";
+  		var corpNm = "${corpNm}";
+  		var $radio = $('input:radio[name=com01CorpCd]:checked');
+  		var cd = $radio.data('com01-corp-cd');
+  		var nm = $radio.data('com01-corp-nm');
+  		console.log(cd + ", " + nm);
+  		$(opener.document).find('#'+corpCd).val(cd);
+  		$(opener.document).find('#'+corpNm).val(nm);
+  		window.close();
+  	});
+    
+    //조회 검색
+    $('.btnRetrieve').on('click', function(){
+        $('#form1').submit();
+    });
+    
+    // 취소
 	$('#btnCancel').click(()=>window.close());
+    // 초기화
 	$('.btnInit').on('click', function(){
         $('#searchText').val(''); 
         $('#form1').submit();
     });
-    $('.btnRetrieve').on('click', function(){
-        $('#form1').submit();
-    });
+    
 });
 function goPageClick(pageNo){
 	$('#form1 input[name=currentPageNumber]').val(pageNo);
 	$('#form1').submit();
 }
+
 </script>	
 </body>
 </html>

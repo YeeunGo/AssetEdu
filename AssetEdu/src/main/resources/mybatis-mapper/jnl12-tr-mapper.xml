@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kfs.assetedu.repository.Jnl12TrRepository">
+	<sql id="whereQureyAttr">
+		 <if test="searchText != null">
+            AND upper(concat(jnl12_tr_cd,jnl12_tr_nm)) like concat('%',upper(#{searchText}),'%')
+        </if>
+	</sql>
+	<select id="selectList" parameterType="QueryAttr" resultType="Jnl12Tr">
+	 SELECT 
+	 	jnl12_tr_cd  			AS jnl12TrCd
+		,jnl12_tr_nm  			AS jnl12TrNm
+		,jnl12_in_out_type  		AS jnl12InOutType
+		,jnl12_use_page_type  	AS jnl12UsePageType
+		,jnl12_use_yn  			AS jnl12UseYn
+		,jnl12InOutTypeNm
+	 FROM
+	 	(select jnl12_tr.*, f_com_nm('BookInOutType', jnl12_in_out_type) as jnl12InOutTypeNm from jnl12_tr) j
+	 WHERE 1=1
+	 	<include refid="whereQureyAttr"/>
+	</select>
+	
+	<select id="selectOne" parameterType="Jnl12Tr" resultType="Jnl12Tr">
+	
+		 SELECT 
+	 	jnl12_tr_cd  			AS jnl12TrCd
+		,jnl12_tr_nm  			AS jnl12TrNm
+		,jnl12_in_out_type  		AS jnl12InOutType
+		,jnl12_use_page_type  	AS jnl12UsePageType
+		,jnl12_use_yn  			AS jnl12UseYn
+		,jnl12InOutTypeNm
+	 FROM
+	 	(select jnl12_tr.*, f_com_nm('BookInOutType', jnl12_in_out_type) as jnl12InOutTypeNm from jnl12_tr) j
+	 WHERE jnl12_tr_cd = #{jnl12TrCd}
+	
+	</select>
+	
+	<insert id="insert" parameterType="jnl12Tr">
+		insert into jnl12_tr(
+			jnl12_tr_cd
+			,jnl12_tr_nm
+			,jnl12_in_out_type
+			,jnl12_use_page_type
+			,jnl12_use_yn
+		)
+		values(
+			#{jnl12TrCd},#{jnl12TrNm},#{jnl12InOutType},#{jnl12UsePageType},#{jnl12UseYn}
+		)
+	</insert>
+	
+<update id="update" parameterType="jnl12Tr">
+    update jnl12_tr set
+        jnl12_tr_cd            = #{jnl12TrCd},
+        jnl12_tr_nm           = #{jnl12TrNm},
+        jnl12_in_out_type     = #{jnl12InOutType},
+        jnl12_use_yn          = #{jnl12UseYn}
+        <if test="jnl12UsePageType != null">
+            ,jnl12_use_page_type   = #{jnl12UsePageType}
+        </if>
+    WHERE jnl12_tr_cd = #{jnl12TrCd}
+</update>
+
+<delete id="delete" parameterType="String" >
+delete from jnl12_tr where jnl12_tr_cd = #{jnl12TrCd}
+</delete>
+</mapper>

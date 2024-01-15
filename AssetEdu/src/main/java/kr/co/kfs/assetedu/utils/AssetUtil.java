@@ -22,7 +22,7 @@ public class AssetUtil {
 		Map<String,Object> map = new HashMap<>();
 
 		for (int i = 0; i < methods.length; i++) {
-			//name이 get으로 시작한다면
+			//name이 get으로 시작하고
 			if (methods[i].getName().startsWith("get")) {
 				try {
 					// 매개변수의 갯수가 0이면 이러한 코드를 실행한다.(getter라는 뜻)

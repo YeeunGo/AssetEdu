@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.kfs.assetedu.model.ApiData;
-import kr.co.kfs.assetedu.model.Condition;
+import kr.co.kfs.assetedu.model.PageAttr;
+import kr.co.kfs.assetedu.model.QueryAttr;
 import kr.co.kfs.assetedu.model.Sys02Dict;
 import kr.co.kfs.assetedu.service.Sys02DictService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,18 +31,24 @@ public class DictController {
 	private Sys02DictService service;
 	
 	@GetMapping("list")
-	public String list(String searchText, String lastDictId, Model model) {
+	public String list(String searchText, String lastDictId, Model model
+			,@RequestParam(value="pageSize", required= false, defaultValue= "10") Integer pageSize
+			,@RequestParam(value="currentPageNumber", required= false, defaultValue= "1")Integer currentPageNumber) {
 		log.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		log.debug("용어사전 리스트");
 		log.debug("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		model.addAttribute("pageTitle","용어사전 리스트");
 		
-		Condition condition = new Condition();
-		condition.put("searchText", searchText);
-		List<Sys02Dict> list = service.selectList(condition);
+		QueryAttr queryAttr = new QueryAttr();
+		queryAttr.put("searchText", searchText);
+		Long totalCount = service.selectCount(queryAttr);
+		PageAttr pageAttr = new PageAttr(totalCount, pageSize, currentPageNumber);
+		queryAttr.put("pageAttr", pageAttr);
+		List<Sys02Dict> list = service.selectList(queryAttr);
 
 		model.addAttribute("list"      , list);
 		model.addAttribute("lastDictId", lastDictId);
+		model.addAttribute("pageAttr", pageAttr);
 		
 		return "/admin/dict/list";
 	}

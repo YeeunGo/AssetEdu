@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kfs.assetedu.repository.Jnl13TrMapRepository">
+ <sql id="whereQureyAttr">
+ 	<if test="jnl12TrCd != null">
+ 		AND jnl13_tr_cd = #{jnl12TrCd}
+ 	</if>
+ </sql>
+
+<select id="selectList" parameterType="QueryAttr" resultType="Jnl13TrMap">
+	SELECT 
+		jnl13_tr_cd 		 AS jnl13TrCd
+		,jnl13_seq			 AS jnl13Seq
+		,jnl13_repr_acnt_cd  AS jnl13ReprAcntCd
+		,jnl11_repr_acnt_nm  AS jnl11ReprAcntNm
+		,jnl13_drcr_type	 AS jnl13DrcrType
+		,jnl13_formula		 AS jnl13Formula
+		,jnl13DrcrTypeNm
+	FROM 
+		(SELECT *, f_com_nm('DrcrType', jnl13_drcr_type) AS jnl13DrcrTypeNm
+		FROM edu.jnl13_tr_map t 
+		LEFT JOIN jnl11_repr_acnt r
+		ON t.jnl13_repr_acnt_cd = r.jnl11_repr_acnt_cd ) j
+	WHERE 1=1
+		<include refid="whereQureyAttr"/>	
+</select>
+
+<select id="selectByTrCd" parameterType="String" resultType="Jnl13TrMap">
+    SELECT * 
+    FROM jnl13_tr_map
+    WHERE jnl13_tr_cd = #{trCd}
+    ORDER BY jnl13_seq
+</select>
+
+<select id="selectOne" parameterType="Jnl13TrMap" resultType="Jnl13TrMap">
+		SELECT 
+		jnl13_tr_cd 		 AS jnl13TrCd
+		,jnl13_seq			 AS jnl13Seq
+		,jnl13_repr_acnt_cd  AS jnl13ReprAcntCd
+		,jnl11_repr_acnt_nm  AS jnl11ReprAcntNm
+		,jnl13_drcr_type	 AS jnl13DrcrType
+		,jnl13_formula		 AS jnl13Formula
+		,jnl13DrcrTypeNm
+	FROM 
+		(SELECT *, f_com_nm('DrcrType', jnl13_drcr_type) AS jnl13DrcrTypeNm
+		FROM edu.jnl13_tr_map t 
+		LEFT JOIN jnl11_repr_acnt r
+		ON t.jnl13_repr_acnt_cd = r.jnl11_repr_acnt_cd ) j
+	WHERE 
+		jnl13_tr_cd  = #{jnl13TrCd} AND jnl13_seq = #{jnl13Seq}
+
+</select>
+
+<insert id="insert" parameterType="Jnl13TrMap">
+	INSERT INTO jnl13_tr_map (
+		jnl13_tr_cd, jnl13_seq, jnl13_repr_acnt_cd, jnl13_drcr_type, jnl13_formula
+		)
+	VALUES (
+		#{jnl13TrCd}, #{jnl13Seq}, #{jnl13ReprAcntCd},  #{jnl13DrcrType}, #{jnl13Formula}
+		)
+
+</insert>
+
+<update id="update"  parameterType="Jnl13TrMap">
+	UPDATE jnl13_tr_map SET 
+		jnl13_repr_acnt_cd	= #{jnl13ReprAcntCd}
+		,jnl13_drcr_type		= #{jnl13DrcrType}
+		,jnl13_formula		= #{jnl13Formula}
+	WHERE 
+		jnl13_tr_cd = #{jnl13TrCd} AND jnl13_seq = #{jnl13Seq}
+</update>
+
+<delete id="delete" parameterType="Jnl13TrMap">
+	DELETE FROM jnl13_tr_map 
+		WHERE 
+		jnl13_tr_cd = #{jnl13TrCd} AND jnl13_seq = #{jnl13Seq}
+</delete>
+</mapper>

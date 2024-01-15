@@ -4,7 +4,7 @@
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.kfs.assetedu.repository.Sys01UserRepository">
-   <sql id="whereConditon">
+   <sql id="whereQueryAttr">
 		<!--    검색조건 -->
    		<if test="sys01UserId != null">
 	       	AND sys01_user_id = #{sys01UserId}
@@ -14,16 +14,19 @@
 		</if>
    </sql>	
    
-	<select id="selectCount" parameterType="Condition" resultType="Integer">
+	<select id="selectCount" parameterType="QueryAttr" resultType="Long">
    		SELECT 
    			count(*) as count
    		FROM
    			sys01_user
    		WHERE 1=1
-   			<include refid="whereConditon"/>	
+   			<include refid="whereQueryAttr"/>	
+   		<if test="pageAttr != null ">
+	      	OFFSET ${pageAttr.offset} LIMIT ${pageAttr.limit}
+		</if>   
    </select> 
    
-   <select id="selectList" parameterType="Condition" resultType="Sys01User">
+   <select id="selectList" parameterType="QueryAttr" resultType="Sys01User">
 	   SELECT
 	           sys01_user_id 	as sys01UserId
              , sys01_user_nm 	as sys01UserNm
@@ -33,7 +36,7 @@
 	   FROM 
 	   		sys01_user
 	   WHERE 1=1
-	   	<include refid="whereConditon"/>
+	   	<include refid="whereQueryAttr"/>
 	   ORDER BY sys01_user_nm	
 		<if test="pageAttr != null and pageAttr.offset != null">
 	      	OFFSET #{pageAttr.offset}
@@ -43,7 +46,7 @@
 		 </if>
    </select>
 
-   <select id="selectOne" parameterType="Sys01User" resultType="Sys01User">
+   <select id="selectOne" parameterType="string" resultType="Sys01User">
 	   SELECT 
 	           sys01_user_id 	as sys01UserId
              , sys01_user_nm 	as sys01UserNm
@@ -51,39 +54,39 @@
              , sys01_tel 		as sys01tel
              , sys01_email		as sys01email
 	   FROM 
-	   		sys02_dict
+	   		sys01_user
 	   WHERE 1=1
-	   	AND sys01_user_id = #{sys02DictId}
+	   	AND sys01_user_id = #{sys01UserId}
    </select>
    
    <select id="getDictId" resultType="String">
         SELECT f_seq()
    </select>
    
-   <insert id="insert" parameterType="Sys02Dict">
+   <insert id="insert" parameterType="Sys01User">
       INSERT INTO sys01_user
       	( sys01_user_id, sys01_user_nm, sys01_pwd , sys01_tel, sys01_email )
       VALUES 
       	( #{sys01UserId}, #{sys01UserNm}, #{sys01Pwd} ,#{sys01tel}, #{sys01email})
    </insert> 
    
-   <update id="update" parameterType="Sys02Dict">
+   <update id="update" parameterType="Sys01User">
       UPDATE  
-      	    sys02_dict 
+      	    sys01_user 
       SET
-	        sys02_short    = #{sys02Short}
-	      , sys02_full     = #{sys02Full}
-	      , sys02_kor_nm   = #{sys02KorNm}
-	      , sys02_note     = #{sys02Note}
+	        sys01_user_nm    = #{sys01UserNm}
+	      , sys01_pwd     = #{sys01Pwd}
+	      , sys01_tel   = #{sys01tel}
+	      , sys01_email     = #{sys01email}
       WHERE 1=1
-	     AND sys01_user_id = #{sys02DictId}
+	     AND sys01_user_id = #{sys01UserId}
    </update>
        
-   <delete id="delete" parameterType="Sys02Dict">
+   <delete id="delete" parameterType="Sys01User">
       DELETE FROM
-        	sys02_dict
+        	sys01_user
       WHERE 1=1
-      	 AND sys01_user_id = #{sys02DictId}
+      	 AND sys01_user_id = #{sys01UserId}
    </delete>    
 
 </mapper>

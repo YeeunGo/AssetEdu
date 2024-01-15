@@ -29,7 +29,7 @@
 
     <div class="row mt-3 mx-5">
         <!-- bootstrap -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://getbootstrap.com/docs/5.2" target="_blank" style="text-decoration-line:none; color:black;">
 		    <div class="card">
                 <img src="image/card_bootstrap4.jpg" class="card-img-top">
@@ -42,7 +42,7 @@
         </div>
 
         <!-- postgresql -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://www.postgresql.org/" target="_blank" style="text-decoration-line:none; color:black;">
             <div class="card">
                 <img src="image/card_postgresql4.jpg" class="card-img-top">
@@ -55,7 +55,7 @@
         </div>
    
         <!-- JQuery -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://jquery.com/" target="_blank" style="text-decoration-line:none; color:black;">
             <div class="card">
                 <img src="image/card_jquery.jpg" class="card-img-top">
@@ -68,7 +68,7 @@
         </div>
     
         <!-- HandleBar -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://handlebarsjs.com/" target="_blank" style="text-decoration-line:none; color:black;">
             <div class="card">
                 <img src="image/card_handlebars.jpg" class="card-img-top">
@@ -83,7 +83,7 @@
     
     <div class="row mt-2 mx-5">
         <!-- maven repository -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://mvnrepository.com/" target="_blank" style="text-decoration-line:none; color:black;">
             <div class="card">
                 <img src="image/card_mavenRepository.jpg" class="card-img-top">
@@ -96,7 +96,7 @@
         </div>
 
 	    <!-- spring boot -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://spring.io/projects/spring-boot" target="_blank" style="text-decoration-line:none; color:black;">
             <div class="card">
                 <img src="image/card_springboot.jpg" class="card-img-top">
@@ -109,7 +109,7 @@
         </div>
 	    
 	    <!-- dbeaver -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://dbeaver.io/" target="_blank" style="text-decoration-line:none; color:black;">
             <div class="card">
                 <img src="image/card_dbeaver.jpg" class="card-img-top">
@@ -122,7 +122,7 @@
         </div>
 	    
 	    <!-- gradle -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <a href="https://docs.gradle.org/current/userguide/about_manual.html" target="_blank" style="text-decoration-line:none; color:black;">
             <div class="card">
                 <img src="image/card_gradle.jpg" class="card-img-top">
@@ -142,7 +142,7 @@
 
     <div class="row mt-3 mx-5">
         <!-- 예탁결제원 -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="https://seibro.or.kr/websquare/control.jsp?w2xPath=/IPORTAL/user/index.xml" target="_blank">
                     <img src="image/card_biz_ksd.jpg" class="card-img-top">
@@ -155,7 +155,7 @@
         </div>
 
         <!-- 금융투자협회 -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="https://dis.kofia.or.kr/websquare/index.jsp?w2xPath=/wq/main/main.xml" target="_blank">
                     <img src="image/card_biz_kofia2.jpg" class="card-img-top">
@@ -169,7 +169,7 @@
         </div>
 
         <!-- DART -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="https://dart.fss.or.kr/" target="_blank">
                     <img src="image/card_biz_dart.jpg" class="card-img-top">
@@ -180,7 +180,7 @@
         </div>
         
         <!-- 기업공시(KIND) -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="https://kind.krx.co.kr/" target="_blank">
                     <img src="image/card_biz_kind.jpg" class="card-img-top">
@@ -193,7 +193,7 @@
 
     <div class="row mt-2 mx-5">
         <!-- 외국환중개 -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="http://www.smbs.biz/ExRate/StdExRate.jsp" target="_blank">
                     <img src="image/card_biz_fxrate.jpg" class="card-img-top">
@@ -204,7 +204,7 @@
         </div>
 
         <!-- 한국회계기준원 -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="http://www.kasb.or.kr/" target="_blank">
                     <img src="image/card_biz_kai2.jpg" class="card-img-top">
@@ -218,7 +218,7 @@
         </div>
 
         <!-- KRX-정보데이터 -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="http://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd" target="_blank">
                     <img src="image/card_biz_krx1.jpg" class="card-img-top">
@@ -229,7 +229,7 @@
         </div>
 
         <!-- KRX-표준코드시스템 -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="https://isin.krx.co.kr/srch/srch.do?method=srchList" target="_blank">
                     <img src="image/card_biz_krx2.jpg" class="card-img-top">
@@ -243,7 +243,7 @@
 
     <div class="row mt-2 mx-5 mb-5">
         <!-- 펀드정보 One-Click 시스템 -->
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="card">
                 <a href="https://fund.kofia.or.kr/" target="_blank">
                     <img src="image/card_biz_oneclick.jpg" class="card-img-top">

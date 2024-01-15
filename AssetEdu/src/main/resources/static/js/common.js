@@ -176,7 +176,7 @@ var AssetUtil = (function(){
             error	: options.error,
             complete : options.complete
         });
-    }
+   } 
     var formSubmit = function(method, action, dataObject){
         var method = method || 'GET' ;
         var action = action || '/';

@@ -43,7 +43,6 @@ public class PageAttr {
 		this.totalItemCount = totalItemCount;
 		this.limit = this.pageSize = pageSize;
 		this.offset = this.startIndex = 0;
-		
 		this.currentPageNumber = currentPageNumber;
 		this.pageNumberSize = 10;
 		this.startPageNumber = 0;

@@ -52,7 +52,7 @@
                      </a>
                      <ul class="dropdown-menu">
                          <li><a class="dropdown-item" href="/jnl/acnt/list">계정과목</a></li>
-                         <li><a class="dropdown-item" href="/jnl/repr-acnt/list">대표계정코드</a></li>
+                         <li><a class="dropdown-item" href="/jnl/repr_acnt/list">대표계정코드</a></li>
                          <li><a class="dropdown-item" href="/jnl/trmap/list">분개매핑</a></li>
                          <li><a class="dropdown-item" href="/jnl/real-acnt/list">실계정매핑</a></li>
                          <li><a class="dropdown-item" href="/jnl/journal/list">분개장</a></li>
@@ -68,6 +68,7 @@
                      <ul class="dropdown-menu">
                          <li><a class="dropdown-item" href="/admin/user/list">사용자관리</a></li>
                          <li><a class="dropdown-item" href="/admin/dict/list">용어사전</a></li>
+                         <li><a class="dropdown-item" href="/test/student">학생목록</a></li>
                      </ul>
                  </li>
                  </sec:authorize>                 

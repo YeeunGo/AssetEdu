@@ -6,7 +6,7 @@ class AssetUtilTest {
 
 	@Test
 	void test() {
-		System.out.println(AssetUtil.ymd());
+		
 	}
 
 }

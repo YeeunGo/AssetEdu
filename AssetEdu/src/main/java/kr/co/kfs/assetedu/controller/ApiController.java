@@ -28,10 +28,10 @@ public class ApiController {
 //		com02Code.setCom02CodeType(codeType);
 //		com02Code.setCom02UseYn("true");
 //
-//		Condition condition = new Condition();
-//		condition.putClass(com02Code);
+//		QueryAttr queryAttr = new QueryAttr();
+//		QueryAttr.putClass(com02Code);
 //		
-//		List<Com02Code> list = codeService.selectList(condition);
+//		List<Com02Code> list = codeService.selectList(queryAttr);
 ////
 //		ApiData apiData = new ApiData();
 //		apiData.put("aa","Test");
@@ -41,9 +41,9 @@ public class ApiController {
 //
 //		//---------------------------------- 이름찾기
 //		
-//		condition.clear();
-//		condition.put("com02ComCd", comCd);
-//		condition.put("com02DtlCd", "NONE");
+//		queryAttr.clear();
+//		queryAttr.put("com02ComCd", comCd);
+//		queryAttr.put("com02DtlCd", "NONE");
 //		
 //		Com02Code type1 = new Com02Code();
 //		type1.setCom02ComCd(comCd);

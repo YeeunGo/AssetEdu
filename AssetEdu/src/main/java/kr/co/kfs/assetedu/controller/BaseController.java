@@ -18,7 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BaseController {
 	
-	protected void printModel(Model model) {
+	//model에 있는 값을 리스트업 하기 위한 메서드(디버깅용)
+	protected void printModel (Model model) {
 		Map<String, Object> md = model.asMap();
 		log.debug("----------------[ Model ]---------------------");
 		for (Object modelKey : md.keySet()) {

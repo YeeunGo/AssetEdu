@@ -48,7 +48,7 @@
 	  <tbody class="table-group-divider" >
 	  	<c:forEach var="list" items="${list}" varStatus="status">
 		    <tr class="align-middle">
-		      <td scope="row" class="text-center fw-bold">${status.count}</td>
+		      <td scope="row" class="text-center fw-bold">${status.count +pageAttr.offset}</td>
               <td class="sys02DictId text-center">${list.sys02DictId}</td>
 		      <td class="sys02KorNm">${list.sys02KorNm}</td>
 		      <td class="sys02Short">${list.sys02Short}</td>
@@ -62,6 +62,13 @@
 	    </c:forEach>
 	  </tbody>
 	</table>
+	<form id="form1" action="/admin/dict/list"  method="GET">
+	<kfs:Pagination pageAttr="${pageAttr}" id="Pagination1" functionName="go"></kfs:Pagination>
+	<input type="hidden" name="searchText" value="${param.searchText}">
+	<input type="hidden" name="pageSize" value="${pageAttr.pageSize }"/>
+	<input type="hidden" name="currentPageNumber" value="1"/>
+	</form>
+	<kfs:PageInfo pageAttr="${pageAttr}" id="PageInfo1"></kfs:PageInfo>
 </main>
 
 <!-- 등록/수정 Modal -->
@@ -159,8 +166,8 @@ $(document).ready(function () {
     	$modal.find('input[name=sys02Note]').val('');
     	
     	//valid class remove
-//         $('#formModalDict').find('div.invalid-feedback').hide()
-//         $('#formModalDict').find('input.is-invalid').removeClass('is-invalid');
+         $('#formModalDict').find('div.invalid-feedback').hide()
+         $('#formModalDict').find('input.is-invalid').removeClass('is-invalid');
     	
     	$('#modalDict').modal('show');
     });
@@ -201,6 +208,7 @@ $(document).ready(function () {
         var validateChecker = $form.jbvalidator({
             language: '/js/validation/lang/ko.json'
         });
+        
         var errorCount = validateChecker.checkAll($form);
         if(errorCount > 0)return;
 	
@@ -240,6 +248,12 @@ $(document).ready(function () {
 	});
 
 }); 
+
+function go(no){
+	$('#form1 input[name=currentPageNumber]').val(no);
+	$('#form1').submit();
+	}
+	
 </script>
 </body>
 </html>
